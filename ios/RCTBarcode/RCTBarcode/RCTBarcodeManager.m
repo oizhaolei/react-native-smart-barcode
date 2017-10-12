@@ -57,6 +57,7 @@ RCT_CUSTOM_VIEW_PROPERTY(barCodeTypes, NSArray, RCTBarcode) {
 - (id)init {
     if ((self = [super init])) {
         self.sessionQueue = dispatch_queue_create("barCodeManagerQueue", DISPATCH_QUEUE_SERIAL);
+        self.isCameraCanUse = YES;
     }
     return self;
 }
@@ -81,6 +82,9 @@ RCT_CUSTOM_VIEW_PROPERTY(barCodeTypes, NSArray, RCTBarcode) {
         
         if (error || captureDeviceInput == nil) {
 //            NSLog(@"%@", error);
+            
+            self.isCameraCanUse = NO;
+            
             return;
         }
         
@@ -113,7 +117,12 @@ RCT_EXPORT_METHOD(startSession) {
         
 //        NSLog(@"self.metadataOutput = %@", self.metadataOutput);
         
-        if(self.metadataOutput == nil) {
+        if (self.videoCaptureDeviceInput == nil || !self.isCameraCanUse) {
+            [self _showAlert];
+            return;
+        }
+        
+        if(self.metadataOutput == nil ) {
             
 //            NSLog(@"self.metadataOutput = %@", self.metadataOutput);
             
@@ -147,6 +156,14 @@ RCT_EXPORT_METHOD(startSession) {
         }
         
     });
+}
+
+-(void)_showAlert {
+    dispatch_async(dispatch_get_main_queue(),
+                   ^{
+                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"バーコードのスキャンはカメラへのアクセス権限が必要です、アクセスを許可するなら「設定」に行っていください。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                       [alert show];
+                   });
 }
 
 RCT_EXPORT_METHOD(stopSession) {
