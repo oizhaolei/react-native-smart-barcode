@@ -7,7 +7,6 @@
 
 
 import React, {
-    PropTypes,
     Component,
 } from 'react'
 import {
@@ -31,18 +30,6 @@ export default class Barcode extends Component {
         scannerRectLeft: 0,
         scannerLineInterval: 3000,
         scannerRectCornerColor: `#09BB0D`,
-    }
-
-    static propTypes = {
-        ...View.propTypes,
-        onBarCodeRead: PropTypes.func.isRequired,
-        barCodeTypes: PropTypes.array,
-        scannerRectWidth: PropTypes.number,
-        scannerRectHeight: PropTypes.number,
-        scannerRectTop: PropTypes.number,
-        scannerRectLeft: PropTypes.number,
-        scannerLineInterval: PropTypes.number,
-        scannerRectCornerColor: PropTypes.string,
     }
 
     render() {
