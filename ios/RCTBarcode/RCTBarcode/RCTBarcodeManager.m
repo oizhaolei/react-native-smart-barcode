@@ -161,7 +161,7 @@ RCT_EXPORT_METHOD(startSession) {
 -(void)_showAlert {
     dispatch_async(dispatch_get_main_queue(),
                    ^{
-                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"バーコードのスキャンはカメラへのアクセス権限が必要です、アクセスを許可するなら「設定」に「カメラ」をオンにしてください。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"需要相机权限，扫描二维码" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
 
                        [alert show];
                    });
